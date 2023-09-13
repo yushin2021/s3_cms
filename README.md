@@ -42,3 +42,9 @@ S3+MicroCMS
 画像を埋め込みにて設定
 ![image](https://github.com/yushin2021/s3_cms/assets/96720606/86b43197-2130-4b6f-93c5-9657a41149e8)
 
+# コマンド
+## ビルド
+npm run build
+
+## 実行
+npm run dev -- --host 0.0.0.0

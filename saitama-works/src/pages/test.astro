@@ -1,11 +1,42 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Title from "../components/Title";
+import { getBlogs } from "../libs/microcms";
+
+export const prerender = true;
+
+const response = await getBlogs({ fields: ["id", "title", "publishedAt","category","member"] });
+let title = 'Fuga';
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-    <div class="font-bold text-white">
-      aaaaaaaaaaaaaaa
+<Layout title="さいたまワークス">
+  <div class="text-white">
+    <h1>Welcome to <span class="text-gradient">{title}</span></h1>
+    <Title>タイトル</Title>
+    <p class="instructions">
+
+    <div class="p-postListWrap news_background animated zoomIn">
+      <ul class="p-postList -type-simple">
+        {
+        response.contents.map((content: any) => (
+          <li class="p-postList__item">
+            <a href={content.id} class="p-postList__link">
+              <div class="p-postList__body">
+                <div class="p-postList__meta">
+                  <div class="p-postList__times c-postTimes u-thin">
+                    <time class="c-postTimes__posted icon-posted" datetime="2022-08-01">{content.publishedAt}</time>
+                  </div>
+                  <span class="p-postList__cat u-thin icon-folder" data-cat-id="7">{content.category.name}</span>
+                  <span class="p-postList__cat u-thin icon-folder" data-cat-id="7">{content.member.name}</span>
+                  <img src={content.member.image.url}/>
+                </div>
+                <h2 class="p-postList__title">{content.title}</h2>
+              </div>
+            </a>
+          </li>
+          ))
+        }
+      </ul>
     </div>
-  </main>
-</Layout> 
+  </div>
+</Layout>
